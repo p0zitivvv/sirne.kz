@@ -106,8 +106,8 @@ export default function ContactsSection() {
                             </div>
 
                             <div className="glass-card rounded-lg p-6 flex items-start gap-4">
-                                <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0">
-                                    <InstagramIcon className="w-5 h-5 text-gold" />
+                                <div className="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0">
+                                    <InstagramIcon className="w-4 h-4 text-gold" />
                                 </div>
                                 <div>
                                     <h3 className="text-cream font-semibold mb-1">Instagram</h3>

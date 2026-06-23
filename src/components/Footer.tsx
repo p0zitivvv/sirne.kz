@@ -77,7 +77,7 @@ export default function Footer() {
                                 <span>Ежедневно 10:00 – 00:00</span>
                             </li>
                             <li className="flex items-center gap-3 text-cream/40 text-sm">
-                                <InstagramIcon size={16} className="text-gold flex-shrink-0" />
+                                <InstagramIcon size={14} className="text-gold flex-shrink-0" />
                                 <a
                                     href="https://instagram.com/sirne.kz_"
                                     target="_blank"
