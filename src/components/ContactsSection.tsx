@@ -14,33 +14,6 @@ export default function ContactsSection() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-    const quickActions = [
-        {
-            icon: Phone,
-            label: 'Позвонить',
-            href: 'tel:+77714953014',
-            color: 'bg-green-600 hover:bg-green-500',
-        },
-        {
-            icon: MessageCircle,
-            label: 'WhatsApp',
-            href: 'https://wa.me/77714953014?text=Здравствуйте! Хочу забронировать столик в SIRNE.KZ',
-            color: 'bg-green-700 hover:bg-green-600',
-        },
-        {
-            icon: InstagramIcon,
-            label: 'Instagram',
-            href: 'https://instagram.com/sirne.kz_',
-            color: 'bg-gradient-to-br from-purple-600 to-pink-500 hover:from-purple-500 hover:to-pink-400',
-        },
-        {
-            icon: Navigation,
-            label: 'Маршрут в 2GIS',
-            href: 'https://2gis.kz/almaty/search/nomad/firm/70000001087489048/78.390873%2C45.018558?m=78.390852%2C45.018309%2F20%2Fp%2F45%2Fr%2F0.25',
-            color: 'bg-blue-600 hover:bg-blue-500',
-        },
-    ];
-
     return (
         <section id="contacts" className="py-24 sm:py-32 bg-dark relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -121,22 +94,6 @@ export default function ContactsSection() {
                                     </a>
                                 </div>
                             </div>
-                        </div>
-
-                        {/* Quick Action Buttons */}
-                        <div className="grid grid-cols-2 gap-3">
-                            {quickActions.map((action) => (
-                                <a
-                                    key={action.label}
-                                    href={action.href}
-                                    target={action.href.startsWith('http') ? '_blank' : undefined}
-                                    rel={action.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                    className={`flex items-center justify-center gap-2 px-4 py-4 sm:py-3 rounded-lg text-white font-medium text-sm transition-all duration-300 ${action.color}`}
-                                >
-                                    <action.icon size={18} />
-                                    <span>{action.label}</span>
-                                </a>
-                            ))}
                         </div>
                     </motion.div>
 
