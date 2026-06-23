@@ -10,7 +10,6 @@ const InstagramIcon = ({ size, className }: { size?: number; className?: string 
 
 const footerLinks = [
     { href: '#about', label: 'О нас' },
-    { href: '#gallery', label: 'Галерея' },
     { href: '#menu', label: 'Меню' },
     { href: '#events', label: 'Мероприятия' },
     { href: '#reviews', label: 'Отзывы' },

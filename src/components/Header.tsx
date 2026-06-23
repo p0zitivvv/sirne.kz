@@ -6,7 +6,6 @@ import { Menu, X, Phone } from 'lucide-react';
 
 const navLinks = [
     { href: '#about', label: 'О нас' },
-    { href: '#gallery', label: 'Галерея' },
     { href: '#menu', label: 'Меню' },
     { href: '#events', label: 'Мероприятия' },
     { href: '#reviews', label: 'Отзывы' },
@@ -28,8 +27,8 @@ export default function Header() {
     return (
         <header
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-                    ? 'bg-dark/95 backdrop-blur-xl shadow-lg shadow-black/20'
-                    : 'bg-transparent'
+                ? 'bg-dark/95 backdrop-blur-xl shadow-lg shadow-black/20'
+                : 'bg-transparent'
                 }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
