@@ -14,6 +14,10 @@ export default function Cart() {
         address: ''
     });
 
+    const sanitizeInput = (str: string) => {
+        return str.replace(/[<>'"&]/g, '').trim().slice(0, 200);
+    };
+
     const handleCheckout = () => {
         if (items.length === 0) return;
         if (!formData.name || !formData.phone || !formData.address) {
@@ -21,19 +25,22 @@ export default function Cart() {
             return;
         }
 
+        const cleanName = sanitizeInput(formData.name);
+        const cleanPhone = sanitizeInput(formData.phone);
+        const cleanAddress = sanitizeInput(formData.address);
+
         const message = `*Новый заказ с сайта SIRNE.KZ*\n` +
             `-------------------------\n` +
             items.map((item, idx) => `${idx + 1}. ${item.nameRu} x${item.quantity} — ${item.price * item.quantity} ₸`).join('\n') +
             `\n-------------------------\n` +
             `*Итого:* ${totalAmount} ₸\n\n` +
-            `*Клиент:* ${formData.name}\n` +
-            `*Тел:* ${formData.phone}\n` +
-            `*Адрес:* ${formData.address}`;
+            `*Клиент:* ${cleanName}\n` +
+            `*Тел:* ${cleanPhone}\n` +
+            `*Адрес:* ${cleanAddress}`;
 
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/77714953014?text=${encodedMessage}`;
 
-        // Use a more reliable way to redirect that bypasses most popup blockers
         window.location.assign(whatsappUrl);
     };
 
