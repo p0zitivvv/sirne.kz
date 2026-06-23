@@ -7,6 +7,7 @@ import EventsSection from '@/components/EventsSection';
 import ReviewsSection from '@/components/ReviewsSection';
 import ContactsSection from '@/components/ContactsSection';
 import Footer from '@/components/Footer';
+import Cart from '@/components/Cart';
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
         <ReviewsSection />
         <ContactsSection />
       </main>
+      <Cart />
       <Footer />
     </>
   );

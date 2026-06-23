@@ -2,8 +2,9 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useMemo } from 'react';
-import { Search, UtensilsCrossed } from 'lucide-react';
+import { Search, UtensilsCrossed, Plus, Minus, ShoppingCart } from 'lucide-react';
 import { categories, menuItems, MenuItem } from '@/data/menu';
+import { useCart } from '@/context/CartContext';
 
 export default function MenuSection() {
     const ref = useRef(null);
@@ -28,6 +29,11 @@ export default function MenuSection() {
     }, [activeCategory, searchQuery]);
 
     const activeCategoryData = categories.find((c) => c.id === activeCategory);
+    const { addItem, updateQuantity, items: cartItems } = useCart();
+
+    const getItemQuantity = (id: string) => {
+        return cartItems.find(item => item.id === id)?.quantity || 0;
+    };
 
     return (
         <section id="menu" className="py-24 sm:py-32 relative kazakh-pattern-bg">
@@ -112,41 +118,73 @@ export default function MenuSection() {
 
                 {/* Menu Items Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {filteredItems.map((item, index) => (
-                        <motion.div
-                            key={item.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ duration: 0.4, delay: index * 0.05 }}
-                            className="group glass-card rounded-lg overflow-hidden hover:border-gold/30 transition-all duration-500"
-                        >
-                            {/* Image */}
-                            <div className="h-44 bg-gradient-to-br from-dark-brown/40 to-graphite/40 relative overflow-hidden">
-                                {item.image ? (
-                                    <img
-                                        src={item.image}
-                                        alt={item.nameRu}
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                        loading="lazy"
-                                    />
-                                ) : (
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:scale-110 transition-transform duration-500">
-                                        <UtensilsCrossed className="w-16 h-16 text-gold/30" />
+                    {filteredItems.map((item, index) => {
+                        const qty = getItemQuantity(item.id);
+                        return (
+                            <motion.div
+                                key={item.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                                transition={{ duration: 0.4, delay: index * 0.05 }}
+                                className="group glass-card rounded-lg overflow-hidden hover:border-gold/30 transition-all duration-500 flex flex-col"
+                            >
+                                {/* Image */}
+                                <div className="h-44 bg-gradient-to-br from-dark-brown/40 to-graphite/40 relative overflow-hidden">
+                                    {item.image ? (
+                                        <img
+                                            src={item.image}
+                                            alt={item.nameRu}
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                            loading="lazy"
+                                        />
+                                    ) : (
+                                        <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:scale-110 transition-transform duration-500">
+                                            <UtensilsCrossed className="w-16 h-16 text-gold/30" />
+                                        </div>
+                                    )}
+                                    <div className="absolute top-3 right-3 px-3 py-1 bg-gold/90 text-dark text-sm font-bold rounded-full">
+                                        {item.price.toLocaleString()} ₸
                                     </div>
-                                )}
-                                <div className="absolute top-3 right-3 px-3 py-1 bg-gold/90 text-dark text-sm font-bold rounded-full">
-                                    {item.price.toLocaleString()} ₸
                                 </div>
-                            </div>
-                            <div className="p-5">
-                                <h4 className="text-lg font-semibold text-cream font-[family-name:var(--font-heading)]">
-                                    {item.nameRu}
-                                </h4>
-                                <p className="text-gold/60 text-xs mt-0.5 italic">{item.nameKz}</p>
-                                <p className="text-cream/40 text-sm mt-2 leading-relaxed">{item.description}</p>
-                            </div>
-                        </motion.div>
-                    ))}
+                                <div className="p-5 flex-1 flex flex-col">
+                                    <h4 className="text-lg font-semibold text-cream font-[family-name:var(--font-heading)]">
+                                        {item.nameRu}
+                                    </h4>
+                                    <p className="text-gold/60 text-xs mt-0.5 italic">{item.nameKz}</p>
+                                    <p className="text-cream/40 text-sm mt-2 leading-relaxed flex-1">{item.description}</p>
+
+                                    {/* Cart Controls */}
+                                    <div className="mt-4 pt-4 border-t border-dark-border flex items-center justify-between">
+                                        {qty > 0 ? (
+                                            <div className="flex items-center gap-4 bg-dark/50 rounded-lg p-1 border border-gold/20">
+                                                <button
+                                                    onClick={() => updateQuantity(item.id, -1)}
+                                                    className="w-8 h-8 flex items-center justify-center rounded-md bg-graphite text-gold hover:bg-gold hover:text-dark transition-all"
+                                                >
+                                                    <Minus size={16} />
+                                                </button>
+                                                <span className="text-cream font-bold w-4 text-center">{qty}</span>
+                                                <button
+                                                    onClick={() => updateQuantity(item.id, 1)}
+                                                    className="w-8 h-8 flex items-center justify-center rounded-md bg-graphite text-gold hover:bg-gold hover:text-dark transition-all"
+                                                >
+                                                    <Plus size={16} />
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <button
+                                                onClick={() => addItem(item)}
+                                                className="w-full py-2.5 bg-dark-card border border-gold/30 text-gold rounded-lg flex items-center justify-center gap-2 hover:bg-gold hover:text-dark transition-all duration-300 font-medium group/btn"
+                                            >
+                                                <ShoppingCart size={18} className="group-hover/btn:scale-110 transition-transform" />
+                                                В корзину
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </motion.div>
+                        );
+                    })}
                 </div>
 
                 {filteredItems.length === 0 && (

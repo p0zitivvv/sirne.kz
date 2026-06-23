@@ -3,21 +3,15 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 
-const galleryCategories = ['Все', 'Блюда', 'Интерьер', 'Банкеты', 'Юрта', 'Семейный отдых'];
+const galleryCategories = ['Все', 'Блюда', 'Интерьер'];
 
 const galleryItems = [
     { id: 1, category: 'Блюда', src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80', alt: 'Бешбармак', height: 'tall' },
     { id: 2, category: 'Интерьер', src: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80', alt: 'Интерьер ресторана', height: 'normal' },
-    { id: 3, category: 'Юрта', src: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80', alt: 'Юрта', height: 'normal' },
     { id: 4, category: 'Блюда', src: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&q=80', alt: 'Мясо на мангале', height: 'tall' },
-    { id: 5, category: 'Банкеты', src: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&q=80', alt: 'Банкет', height: 'normal' },
-    { id: 6, category: 'Семейный отдых', src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80', alt: 'Семейный ужин', height: 'tall' },
     { id: 7, category: 'Блюда', src: 'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=600&q=80', alt: 'Выпечка', height: 'normal' },
     { id: 8, category: 'Интерьер', src: 'https://images.unsplash.com/photo-1550966871-3ed3cdb51f3a?w=600&q=80', alt: 'Кабинка', height: 'normal' },
-    { id: 9, category: 'Банкеты', src: 'https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=600&q=80', alt: 'Декор торжества', height: 'tall' },
     { id: 10, category: 'Блюда', src: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80', alt: 'Десерт', height: 'normal' },
-    { id: 11, category: 'Юрта', src: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=600&q=80', alt: 'Юрта внутри', height: 'normal' },
-    { id: 12, category: 'Семейный отдых', src: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80', alt: 'Дастархан', height: 'tall' },
 ];
 
 export default function GallerySection() {
@@ -64,8 +58,8 @@ export default function GallerySection() {
                             key={cat}
                             onClick={() => setActiveCategory(cat)}
                             className={`px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 ${activeCategory === cat
-                                    ? 'bg-gold text-dark'
-                                    : 'border border-gold/30 text-cream/60 hover:border-gold hover:text-gold'
+                                ? 'bg-gold text-dark'
+                                : 'border border-gold/30 text-cream/60 hover:border-gold hover:text-gold'
                                 }`}
                         >
                             {cat}
