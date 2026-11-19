@@ -7,12 +7,13 @@ import ReviewsSection from '@/components/ReviewsSection';
 import ContactsSection from '@/components/ContactsSection';
 import Footer from '@/components/Footer';
 import Cart from '@/components/Cart';
+import MobileActionBar from '@/components/MobileActionBar';
 
 export default function Home() {
   return (
     <>
       <Header />
-      <main>
+      <main className="overflow-x-hidden">
         <HeroSection />
         <AboutSection />
         <MenuSection />
@@ -22,6 +23,7 @@ export default function Home() {
       </main>
       <Cart />
       <Footer />
+      <MobileActionBar />
     </>
   );
 }

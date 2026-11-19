@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CartProvider } from "@/context/CartContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
-  title: "SIRNE.KZ — Halal Этно-Ресторан в Талдыкоргане",
-  description: "Премиальный halal этно-ресторан SIRNE.KZ в Талдыкоргане. Настоящий вкус казахских традиций: бешбармак, национальная кухня, юрта на 60 человек, банкетный зал на 100 гостей. Бронируйте столик!",
-  keywords: "ресторан Талдыкорган, халяль кухня, казахская кухня, бешбармак, этно-ресторан, SIRNE, юрта, банкет, той, кудалык",
+  title: "SIRNE.KZ — Halal Этно-Ресторан в Талдыкоргане | Той, Банкет, Ұлттық тағамдар",
+  description: "Премиальный halal этно-ресторан SIRNE.KZ в Талдыкоргане. Настоящий вкус казахских традиций: бешбармак, юрта на 60 человек, банкетный зал на 100 гостей. Бронирование мероприятий через WhatsApp!",
+  keywords: "ресторан Талдыкорган, халяль кухня, казахская кухня, бешбармак, этно-ресторан, SIRNE, юрта, банкет, той, кудалык, сірне, мейрамхана Талдықорған",
   openGraph: {
     title: "SIRNE.KZ — Halal Этно-Ресторан",
-    description: "Настоящий вкус казахских традиций в современном исполнении. Забронируйте столик!",
+    description: "Настоящий вкус казахских традиций в современном исполнении. Забронируйте мероприятие через WhatsApp!",
     type: "website",
     locale: "ru_RU",
   },
 };
-
-import { CartProvider } from "@/context/CartContext";
 
 export default function RootLayout({
   children,
@@ -25,14 +25,20 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="#0A0A0A" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body className="antialiased">
-        <CartProvider>
-          {children}
-        </CartProvider>
+      <body className="antialiased bg-dark text-cream selection:bg-gold/30 selection:text-cream">
+        <LanguageProvider>
+          <CartProvider>
+            {children}
+          </CartProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
