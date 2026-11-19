@@ -53,26 +53,20 @@ export default function MenuSection() {
     );
   }, [searchQuery]);
 
-  // Scroll active tab into view in the horizontal nav
+  // Scroll active tab into view in the horizontal nav ONLY (never scrolls window)
   const scrollActiveTabIntoView = useCallback((catId: string) => {
     const btn = categoryButtonsRef.current[catId];
-    if (btn && categoryNavRef.current) {
-      const container = categoryNavRef.current;
-      const btnRect = btn.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
+    const container = categoryNavRef.current;
+    if (btn && container) {
+      const btnLeft = btn.offsetLeft;
+      const btnWidth = btn.offsetWidth;
+      const containerWidth = container.clientWidth;
+      const targetScroll = btnLeft - containerWidth / 2 + btnWidth / 2;
 
-      // Check if button is fully visible in container
-      const isVisible =
-        btnRect.left >= containerRect.left + 20 &&
-        btnRect.right <= containerRect.right - 20;
-
-      if (!isVisible) {
-        btn.scrollIntoView({
-          behavior: 'smooth',
-          inline: 'center',
-          block: 'nearest',
-        });
-      }
+      container.scrollTo({
+        left: Math.max(0, targetScroll),
+        behavior: 'smooth',
+      });
     }
   }, []);
 
@@ -89,18 +83,28 @@ export default function MenuSection() {
       // Re-enable scroll listener after animation finishes
       setTimeout(() => {
         isClickScrolling.current = false;
-      }, 700);
+      }, 800);
     }
   };
 
-  // Scroll spy to highlight active category as user scrolls
+  // Scroll spy to highlight active category ONLY when user is inside #menu
   useEffect(() => {
     if (searchQuery.trim()) return;
 
     const handleScroll = () => {
       if (isClickScrolling.current) return;
 
-      const headerOffset = 180; // height of Header (80px) + sticky category bar (~60px) + buffer
+      const menuSection = document.getElementById('menu');
+      if (!menuSection) return;
+
+      const menuRect = menuSection.getBoundingClientRect();
+      const headerOffset = 180;
+
+      // Only spy when viewport intersects with the menu section
+      if (menuRect.top > headerOffset || menuRect.bottom < headerOffset) {
+        return;
+      }
+
       const scrollPosition = window.scrollY + headerOffset;
 
       for (let i = categories.length - 1; i >= 0; i--) {
@@ -108,7 +112,7 @@ export default function MenuSection() {
         const el = document.getElementById(`category-${cat.id}`);
         if (el) {
           const top = el.offsetTop;
-          if (scrollPosition >= top) {
+          if (scrollPosition >= top - 30) {
             setActiveCategory((prev) => {
               if (prev !== cat.id) {
                 scrollActiveTabIntoView(cat.id);
